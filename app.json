@@ -3,7 +3,7 @@
     "name": "MealsApp",
     "slug": "MealsApp",
     "version": "1.0.0",
-    "orientation": "portrait",
+    "orientation": "defa",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
