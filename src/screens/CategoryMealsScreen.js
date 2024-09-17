@@ -11,7 +11,7 @@ const CategoryMealScreen = props => {
   );
  
   const renderMealItem = itemData => {
-    console.log(itemData);
+   
     return (      
       <MealItem      
         title={itemData.item.title}

@@ -8,7 +8,7 @@ import { MEALS } from '../data/dummy-data';
 const ListItem = props => {
   return (
     <View style={styles.listItem}>
-      <Text>{props.children}</Text>
+      <Text style={styles.listItemText}>{props.children}</Text>
     </View>
   );
 };
@@ -16,7 +16,7 @@ const ListItem = props => {
 const MealDetailScreen = props => {
   const mealId = props.route.params.mealId;
   const selectedMeal = MEALS.find(meal => meal.id === mealId);
-
+console.log(selectedMeal);
   if (!selectedMeal) {
     return (
       <View style={styles.screen}>
@@ -30,7 +30,11 @@ const MealDetailScreen = props => {
   const isFavorite = favoriteMeals.some(meal => meal.id === selectedMeal.id);
 
   const toggleFavoriteHandler = () => {
-    dispatch(toggleFavorite(selectedMeal.id));
+    if (selectedMeal && selectedMeal.id) {
+      dispatch(toggleFavorite(selectedMeal.id));
+    } else {
+      console.log('Selected meal or meal id is undefined');
+    }
   };
 
   useLayoutEffect(() => {
@@ -53,12 +57,20 @@ const MealDetailScreen = props => {
         <Text>{selectedMeal.affordability.toUpperCase()}</Text>
       </View>
       <Text style={styles.title}>Ingredients</Text>
-      {selectedMeal.ingredients.map(ingredient => (
-        <ListItem key={ingredient}>{ingredient}</ListItem>
+      {selectedMeal.ingredients.map((ingredient, index) => (
+        <View key={ingredient} style={styles.ingredientContainer}>
+          <Text style={styles.ingredientText}>{ingredient}</Text>
+          {index < selectedMeal.ingredients.length - 1 && (
+            <View style={styles.separator} />
+          )}
+        </View>
       ))}
       <Text style={styles.title}>Steps</Text>
-      {selectedMeal.steps.map(step => (
-        <ListItem key={step}>{step}</ListItem>
+      {selectedMeal.steps.map((step, index) => (
+        <View key={step} style={styles.stepContainer}>
+          <Text style={styles.stepNumber}>{index + 1}. </Text>
+          <Text style={styles.stepText}>{step}</Text>
+        </View>
       ))}
     </ScrollView>
   );
@@ -67,29 +79,56 @@ const MealDetailScreen = props => {
 const styles = StyleSheet.create({
   image: {
     width: '100%',
-    height: 200
+    height: 200,
   },
   details: {
     flexDirection: 'row',
     padding: 15,
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
   },
   title: {  
-    fontSize: 22,
-    textAlign: 'center'
+    fontSize: 24, 
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginVertical: 10,
   },
   listItem: {
+    marginVertical: 5,
+    marginHorizontal: 20,
+  },
+  listItemText: {
+    fontSize: 18, 
+  },
+  ingredientContainer: {
     marginVertical: 10,
     marginHorizontal: 20,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    padding: 10
+  },
+  ingredientText: {
+    fontSize: 18,
+  },
+  separator: {
+    borderBottomWidth: 1,
+    borderBottomColor: '#ccc',
+    marginVertical: 5,
+  },
+  stepContainer: {
+    flexDirection: 'row',
+    marginVertical: 10,
+    marginHorizontal: 20,
+  },
+  stepNumber: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    paddingRight:5,
+  },
+  stepText: {
+    fontSize: 18,
   },
   screen: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });
 
 export default MealDetailScreen;

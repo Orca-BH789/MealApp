@@ -5,6 +5,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
 import { Provider } from 'react-redux';
+import { CommonActions } from '@react-navigation/native';
 
 import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
@@ -66,7 +67,7 @@ const MealsFavTabNavigator = () => (
         let iconName;
         if (route.name === 'Meals') {
           iconName = focused ? 'home' : 'home-outline';
-        } else if (route.name === 'Favorites') {
+        } else if (route.name === 'FavoritesTab') {
           iconName = focused ? 'heart' : 'heart-outline';
         } else if (route.name === 'Search') {
           iconName = focused ? 'search' : 'search-outline';
@@ -80,7 +81,7 @@ const MealsFavTabNavigator = () => (
     })}
   >
     <Tab.Screen name="Meals" component={MealsNavigator} options={{ headerShown: false }} />
-    <Tab.Screen name="Favorites" component={FavNavigator} options={{ headerShown: false }} />
+    <Tab.Screen name="FavoritesTab" component={FavNavigator} options={{ headerShown: false }} />
     <Tab.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
   </Tab.Navigator>
 );
@@ -99,7 +100,7 @@ const SettingsNavigator = () => (
 
 
 const MainDrawerNavigator = createDrawerNavigator();
-const MainNavigator = () => (
+const MainNavigator = ({ navigation }) => (
   <MainDrawerNavigator.Navigator
     screenOptions={{
       drawerActiveTintColor: '#f4511e',
@@ -113,7 +114,15 @@ const MainNavigator = () => (
         drawerLabel: 'Meals',
         drawerIcon: ({ color }) => (
           <Ionicons name="restaurant" size={24} color={color} />
-        ),
+        ),     
+        drawerLabelPress: () => {
+          navigation.dispatch(
+            CommonActions.reset({
+              index: 0,
+              routes: [{ name: 'Meals' }],
+            })
+          );
+        },
       }}
     />
     <MainDrawerNavigator.Screen
