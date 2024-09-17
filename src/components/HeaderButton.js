@@ -1,17 +1,13 @@
 import React from 'react';
-// import { HeaderButton } from 'react-navigation-header-buttons';
-// import { Ionicons } from '@expo/vector-icons';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 
-const cHeaderButton = props => {
+const HeaderButton = ({ onPress, iconName }) => {
   return (
-    <HeaderButton
-      {...props}
-      IconComponent={MaterialIcons}
-      iconSize={23}
-      color="white"
-    />
+    <TouchableOpacity onPress={onPress} style={{ marginRight: 10 }}>
+      <Icon name={iconName} size={25} color="white" />
+    </TouchableOpacity>
   );
 };
 
-export default cHeaderButton;
+export default HeaderButton;

@@ -1,6 +1,6 @@
 import React, { useLayoutEffect } from 'react';
 import { ScrollView, View, Image, Text, StyleSheet } from 'react-native';
-// import HeaderButton from '../components/HeaderButton';
+import HeaderButton from '../components/HeaderButton';
 import { MEALS } from '../data/dummy-data';
 
 const ListItem = props => {
@@ -18,15 +18,10 @@ const MealDetailScreen = props => {
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <HeaderButtons HeaderButtonComponent={HeaderButton}>
-          <Item
-            title="Favorite"
-            iconName="ios-star"
-            onPress={() => {
-              console.log('Mark as favorite!');
-            }}
+        <HeaderButton HeaderButtonComponent={HeaderButton}          
+            title="Favorite" iconName="heart-outline"           
           />
-        </HeaderButtons>
+        
       ),
     });
   }, [props.navigation]);
@@ -61,8 +56,7 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: 'space-around'
   },
-  title: {
-    fontFamily: 'open-sans',
+  title: {   
     fontSize: 22,
     textAlign: 'center'
   },

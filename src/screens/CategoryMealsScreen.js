@@ -9,10 +9,11 @@ const CategoryMealScreen = props => {
   const displayedMeals = MEALS.filter(
     meal => meal.categoryIds.indexOf(catId) >= 0
   );
-  
+ 
   const renderMealItem = itemData => {
-    return (
-      <MealItem
+    console.log(itemData);
+    return (      
+      <MealItem      
         title={itemData.item.title}
         image={itemData.item.imageUrl}
         duration={itemData.item.duration}
