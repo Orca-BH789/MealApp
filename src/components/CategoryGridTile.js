@@ -1,14 +1,20 @@
 import React from 'react';
-import { TouchableOpacity, View, Text, StyleSheet } from 'react-native';
+import { TouchableOpacity, View, Text, StyleSheet, ImageBackground, ActivityIndicator } from 'react-native';
 
-const CategoryGridTile = props => {
+const CategoryGridTile = ({ title, img, onSelect, isSelected }) => {
   return (
-    <TouchableOpacity
-      style={styles.gridItem}
-      onPress={props.onSelect}
-    >
-      <View style={{ ...styles.container, backgroundColor: props.color }}>
-        <Text style={styles.title}>{props.title}</Text>
+    <TouchableOpacity style={styles.gridItem} onPress={onSelect}>
+      <View style={[styles.container, isSelected && styles.selectedContainer]}>
+        <ImageBackground
+          source={{ uri: img }}
+          style={styles.bgImage}
+          imageStyle={styles.bgImageStyle}
+          onError={() => console.log('Error loading image')} // Add error handling
+        >
+          <View style={styles.titleContainer}>
+            <Text style={styles.title}>{title}</Text>
+          </View>
+        </ImageBackground>
       </View>
     </TouchableOpacity>
   );
@@ -28,12 +34,27 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 10,
     elevation: 3,
-    padding: 15,
+    overflow: 'hidden',
+  },
+  selectedContainer: {
+    borderWidth: 3,
+    borderColor: 'green',
+  },
+  bgImage: {
+    flex: 1,
     justifyContent: 'flex-end',
-    alignItems: 'flex-end',
+  },
+  bgImageStyle: {
+    borderRadius: 10,
+  },
+  titleContainer: {
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    paddingHorizontal: 12,
+    paddingVertical: 5,
   },
   title: {
     fontSize: 22,
+    color: 'white',
     textAlign: 'right',
   },
 });

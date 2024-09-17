@@ -1,6 +1,8 @@
 import React, { useLayoutEffect } from 'react';
 import { ScrollView, View, Image, Text, StyleSheet } from 'react-native';
 import HeaderButton from '../components/HeaderButton';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleFavorite } from '../store/action/meal';
 import { MEALS } from '../data/dummy-data';
 
 const ListItem = props => {
@@ -15,16 +17,32 @@ const MealDetailScreen = props => {
   const mealId = props.route.params.mealId;
   const selectedMeal = MEALS.find(meal => meal.id === mealId);
 
+  if (!selectedMeal) {
+    return (
+      <View style={styles.screen}>
+        <Text>Meal not found!</Text>
+      </View>
+    );
+  }
+
+  const dispatch = useDispatch();
+  const favoriteMeals = useSelector(state => state.meals.favoriteMeals);
+  const isFavorite = favoriteMeals.some(meal => meal.id === selectedMeal.id);
+
+  const toggleFavoriteHandler = () => {
+    dispatch(toggleFavorite(selectedMeal.id));
+  };
+
   useLayoutEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
-        <HeaderButton HeaderButtonComponent={HeaderButton}          
-            title="Favorite" iconName="heart-outline"           
-          />
-        
+        <HeaderButton
+          iconName={isFavorite ? 'heart' : 'heart-outline'}
+          onPress={toggleFavoriteHandler}
+        />
       ),
     });
-  }, [props.navigation]);
+  }, [props.navigation, isFavorite, dispatch]);
 
   return (
     <ScrollView>
@@ -56,7 +74,7 @@ const styles = StyleSheet.create({
     padding: 15,
     justifyContent: 'space-around'
   },
-  title: {   
+  title: {  
     fontSize: 22,
     textAlign: 'center'
   },
@@ -66,6 +84,11 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderWidth: 1,
     padding: 10
+  },
+  screen: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 

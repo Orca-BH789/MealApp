@@ -4,11 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Ionicons } from '@expo/vector-icons';
+import { Provider } from 'react-redux';
 
 import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import SettingsScreen from '../screens/SettingsScreen';
+import store from '../store/store'; 
+import SearchScreen from '../screens/SearchScreen';
 import MealDetailScreen from '../screens/MealDetailScreen';
 
 const defaultStackNavOptions = {
@@ -34,9 +37,9 @@ const MealsNavigator = () => (
       component={CategoryMealsScreen}
     />
     <MealsStackNavigator.Screen
-        name="MealDetail"
-        component={MealDetailScreen}
-      />
+      name="MealDetail"
+      component={MealDetailScreen}
+    />
   </MealsStackNavigator.Navigator>
 );
 
@@ -48,10 +51,10 @@ const FavNavigator = () => (
       component={FavoritesScreen}
       options={{ title: 'Your Favorites' }}
     />
-     <FavStackNavigator.Screen
-        name="MealDetail"
-        component={MealDetailScreen}
-      />
+    <FavStackNavigator.Screen
+      name="MealDetail"
+      component={MealDetailScreen}
+    />
   </FavStackNavigator.Navigator>
 );
 
@@ -62,18 +65,23 @@ const MealsFavTabNavigator = () => (
       tabBarIcon: ({ focused, color, size }) => {
         let iconName;
         if (route.name === 'Meals') {
-          iconName = focused ? 'restaurant' : 'restaurant-outline';
+          iconName = focused ? 'home' : 'home-outline';
         } else if (route.name === 'Favorites') {
-          iconName = focused ? 'star' : 'star-outline';
+          iconName = focused ? 'heart' : 'heart-outline';
+        } else if (route.name === 'Search') {
+          iconName = focused ? 'search' : 'search-outline';
         }
+        
         return <Ionicons name={iconName} size={size} color={color} />;
       },
       tabBarActiveTintColor: '#f4511e',
       tabBarInactiveTintColor: 'gray',
+      tabBarLabel: () => null,
     })}
   >
     <Tab.Screen name="Meals" component={MealsNavigator} options={{ headerShown: false }} />
     <Tab.Screen name="Favorites" component={FavNavigator} options={{ headerShown: false }} />
+    <Tab.Screen name="Search" component={SearchScreen} options={{ headerShown: false }} />
   </Tab.Navigator>
 );
 
@@ -88,6 +96,8 @@ const SettingsNavigator = () => (
   </SettingsStackNavigator.Navigator>
 );
 
+
+
 const MainDrawerNavigator = createDrawerNavigator();
 const MainNavigator = () => (
   <MainDrawerNavigator.Navigator
@@ -97,7 +107,7 @@ const MainNavigator = () => (
     }}
   >
     <MainDrawerNavigator.Screen
-      name="DuyTun"
+      name="Menu"
       component={MealsFavTabNavigator}
       options={{
         drawerLabel: 'Meals',
@@ -120,9 +130,11 @@ const MainNavigator = () => (
 
 export default function AppNavigator() {
   return (
+    <Provider store={store}> 
       <SafeAreaView style={{ flex: 1 }}>
         <StatusBar backgroundColor="transparent" barStyle="dark-content" translucent />
         <MainNavigator />
       </SafeAreaView>
+    </Provider>
   );
 }

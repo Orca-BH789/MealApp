@@ -2,17 +2,14 @@
 const generateId = () => Math.random().toString(36).substr(2, 9);
 
 export const CATEGORIES = [
-  { id: generateId(), title: 'Italian', color: '#f5428d' },
-  { id: generateId(), title: 'Quick & Easy', color: '#f54242' },
-  { id: generateId(), title: 'Hamburgers', color: '#f5a442' },
-  { id: generateId(), title: 'German', color: '#f5d142' },
-  { id: generateId(), title: 'Light & Lovely', color: '#368dff' },
-  { id: generateId(), title: 'Exotic', color: '#41d95d' },
-  { id: generateId(), title: 'Breakfast', color: '#9eecff' },
-  { id: generateId(), title: 'Asian', color: '#b9ffb0' },
-  { id: generateId(), title: 'French', color: '#ffc7ff' },
-  { id: generateId(), title: 'Summer', color: '#47fced' }
+  { id: generateId(), title: 'Main Dishes', img: 'https://www.southernliving.com/thmb/4aFHPcniwvkX0_7ANZQ5VqL3MCg=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/27531_ST_TENDERLOINS_13-7442687e434e4c4c95609ff0262773a2.jpg' },
+  { id: generateId(), title: 'Snacks', img: 'https://www.grandecig.com/hs-fs/hubfs/images/blog_images/2019-Blog-Images/Savory_Snacks.jpg?width=734&name=Savory_Snacks.jpg' },
+  { id: generateId(), title: 'Breakfast', img: 'https://images.services.kitchenstories.io/PoWKyK2NRjcDzZsSkvnvgMS6N1M=/3840x0/filters:quality(80)/images.kitchenstories.io/communityImages/f4604e05f6a9eaca99afddd69e849005_c02485d4-0841-4de6-b152-69deb38693f2.jpg' },
+  { id: generateId(), title: 'Asian', img: 'https://media.vneconomy.vn/w800/images/upload/2024/01/13/phos-1920x1280.jpg' },
+  { id: generateId(), title: 'French', img: 'https://bizweb.dktcdn.net/100/438/465/files/banh-sung-trau-croissant-sapo-bakery.jpg?v=1659681401584' },
+  { id: generateId(), title: 'Summer', img: 'https://realfood.tesco.com/media/images/1400x919-Smoky-Sausage-Skewers-8480ee3a-c02c-4ccc-b26a-4038a93a632f-0-1400x919.jpg' }
 ];
+
 
 export const MEALS = [
   {
@@ -45,5 +42,5 @@ export const MEALS = [
     isVegetarian: true,
     isLactoseFree: true,
   },
-  // Thêm các món ăn khác tương tự
+  
 ];
